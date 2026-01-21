@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Search, CheckCircle, Clock, XCircle } from "lucide-react"
+import { Search, CheckCircle, Clock, XCircle, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -126,7 +126,14 @@ export function CoverageChecker({ className }: { className?: string }) {
             className="mt-4"
           >
             {result.status === "available" && (
-              <div className="flex items-start gap-3 p-4 rounded-lg bg-green-50 border border-green-200">
+              <div className="relative flex items-start gap-3 p-4 rounded-lg bg-green-50 border border-green-200">
+                <button
+                  onClick={resetSearch}
+                  className="absolute top-2 right-2 p-1 rounded-full hover:bg-green-200/50 transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="h-4 w-4 text-green-600" />
+                </button>
                 <CheckCircle className="h-6 w-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-green-800">
@@ -145,7 +152,14 @@ export function CoverageChecker({ className }: { className?: string }) {
             )}
 
             {result.status === "coming_soon" && (
-              <div className="flex items-start gap-3 p-4 rounded-lg bg-yellow-50 border border-yellow-200">
+              <div className="relative flex items-start gap-3 p-4 rounded-lg bg-yellow-50 border border-yellow-200">
+                <button
+                  onClick={resetSearch}
+                  className="absolute top-2 right-2 p-1 rounded-full hover:bg-yellow-200/50 transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="h-4 w-4 text-yellow-600" />
+                </button>
                 <Clock className="h-6 w-6 text-yellow-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-yellow-800">Coming Soon!</p>
@@ -162,7 +176,14 @@ export function CoverageChecker({ className }: { className?: string }) {
             )}
 
             {result.status === "not_available" && (
-              <div className="flex items-start gap-3 p-4 rounded-lg bg-gray-50 border border-gray-200">
+              <div className="relative flex items-start gap-3 p-4 rounded-lg bg-gray-50 border border-gray-200">
+                <button
+                  onClick={resetSearch}
+                  className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200/50 transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="h-4 w-4 text-gray-500" />
+                </button>
                 <XCircle className="h-6 w-6 text-gray-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-800">

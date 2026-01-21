@@ -50,14 +50,13 @@ export function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
             >
-              <h1 className="text-display text-foreground mb-6">
+              <h1 className="text-display text-foreground mb-6 leading-none">
                 <TextGenerateEffect
                   words="Fast. Reliable."
                   className="inline"
                   duration={0.4}
                 />
-                <br />
-                <span className="text-primary">
+                <span className="block text-primary -mt-2 md:-mt-3 lg:-mt-4">
                   <TextGenerateEffect
                     words="Local Internet."
                     className="inline"
