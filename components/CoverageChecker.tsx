@@ -20,7 +20,13 @@ export function CoverageChecker({ className }: { className?: string }) {
   const [isSearching, setIsSearching] = React.useState(false)
 
   const handleSearch = () => {
-    if (!query.trim()) return
+    if (!query.trim()) {
+      // Shake animation feedback for empty input
+      const input = document.querySelector('input[placeholder="Enter barangay or ZIP code"]')
+      input?.classList.add('animate-shake')
+      setTimeout(() => input?.classList.remove('animate-shake'), 500)
+      return
+    }
 
     setIsSearching(true)
 
@@ -88,10 +94,24 @@ export function CoverageChecker({ className }: { className?: string }) {
         </div>
         <Button
           onClick={handleSearch}
-          disabled={isSearching || !query.trim()}
-          className="h-12 px-6"
+          disabled={isSearching}
+          className="h-12 px-6 relative overflow-hidden group/btn"
         >
-          {isSearching ? "Checking..." : "Check"}
+          {/* Subtle pulse animation to draw attention */}
+          <motion.span
+            className="absolute inset-0 bg-white/10 opacity-0 group-hover/btn:opacity-100 transition-opacity"
+            animate={{
+              scale: [1, 1.05, 1],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <span className="relative z-10">
+            {isSearching ? "Checking..." : "Check"}
+          </span>
         </Button>
       </div>
 

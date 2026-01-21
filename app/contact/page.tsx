@@ -109,145 +109,286 @@ export default function ContactPage() {
 
                 {isSubmitted ? (
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-12"
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                    className="text-center py-12 relative"
                   >
-                    <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="w-8 h-8 text-green-600" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                    {/* Success confetti particles */}
+                    {[...Array(12)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="absolute w-2 h-2 rounded-full"
+                        style={{
+                          left: "50%",
+                          top: "30%",
+                          backgroundColor: [
+                            "#0EA5E9", "#22C55E", "#A855F7", "#F59E0B"
+                          ][i % 4],
+                        }}
+                        initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                        animate={{
+                          opacity: [0, 1, 1, 0],
+                          scale: [0, 1, 1, 0.5],
+                          x: Math.cos((i * 30) * Math.PI / 180) * (80 + (i % 3) * 30),
+                          y: Math.sin((i * 30) * Math.PI / 180) * (60 + (i % 3) * 20) - 20,
+                        }}
+                        transition={{
+                          duration: 0.8,
+                          delay: 0.1 + i * 0.03,
+                          ease: "easeOut",
+                        }}
+                      />
+                    ))}
+
+                    {/* Animated check circle */}
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 15,
+                        delay: 0.1,
+                      }}
+                      className="w-20 h-20 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30"
+                    >
+                      <motion.svg
+                        className="w-10 h-10 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <motion.path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                          initial={{ pathLength: 0 }}
+                          animate={{ pathLength: 1 }}
+                          transition={{ duration: 0.4, delay: 0.3 }}
+                        />
+                      </motion.svg>
+                    </motion.div>
+
+                    <motion.h3
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-2xl font-bold text-foreground mb-2"
+                    >
                       Message Sent!
-                    </h3>
-                    <p className="text-muted-foreground mb-6">
+                    </motion.h3>
+                    <motion.p
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-muted-foreground mb-6"
+                    >
                       Thank you for reaching out. We&apos;ll get back to you within
                       24 hours.
-                    </p>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setIsSubmitted(false)
-                        setFormState({
-                          name: "",
-                          email: "",
-                          phone: "",
-                          company: "",
-                          message: "",
-                        })
-                      }}
+                    </motion.p>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
                     >
-                      Send Another Message
-                    </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          setIsSubmitted(false)
+                          setFormState({
+                            name: "",
+                            email: "",
+                            phone: "",
+                            company: "",
+                            message: "",
+                          })
+                        }}
+                      >
+                        Send Another Message
+                      </Button>
+                    </motion.div>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Name <span className="text-red-500">*</span>
                         </label>
-                        <input
+                        <motion.input
                           type="text"
                           name="name"
                           value={formState.name}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors ${
+                          whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(14,165,233,0.15)" }}
+                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 ${
                             errors.name ? "border-red-500" : "border-border"
                           }`}
                           placeholder="Your name"
                         />
                         {errors.name && (
-                          <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+                          <motion.p
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-red-500 text-sm mt-1"
+                          >
+                            {errors.name}
+                          </motion.p>
                         )}
-                      </div>
-                      <div>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.15 }}
+                      >
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Email <span className="text-red-500">*</span>
                         </label>
-                        <input
+                        <motion.input
                           type="email"
                           name="email"
                           value={formState.email}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors ${
+                          whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(14,165,233,0.15)" }}
+                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 ${
                             errors.email ? "border-red-500" : "border-border"
                           }`}
                           placeholder="your@email.com"
                         />
                         {errors.email && (
-                          <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                          <motion.p
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-red-500 text-sm mt-1"
+                          >
+                            {errors.email}
+                          </motion.p>
                         )}
-                      </div>
+                      </motion.div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Phone <span className="text-red-500">*</span>
                         </label>
-                        <input
+                        <motion.input
                           type="tel"
                           name="phone"
                           value={formState.phone}
                           onChange={handleChange}
-                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors ${
+                          whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(14,165,233,0.15)" }}
+                          className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 ${
                             errors.phone ? "border-red-500" : "border-border"
                           }`}
                           placeholder="+63 917 123 4567"
                         />
                         {errors.phone && (
-                          <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
+                          <motion.p
+                            initial={{ opacity: 0, y: -5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-red-500 text-sm mt-1"
+                          >
+                            {errors.phone}
+                          </motion.p>
                         )}
-                      </div>
-                      <div>
+                      </motion.div>
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.25 }}
+                      >
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Company <span className="text-muted-foreground">(optional)</span>
                         </label>
-                        <input
+                        <motion.input
                           type="text"
                           name="company"
                           value={formState.company}
                           onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors"
+                          whileFocus={{ scale: 1.01, boxShadow: "0 0 0 3px rgba(14,165,233,0.15)" }}
+                          className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
                           placeholder="Your company"
                         />
-                      </div>
+                      </motion.div>
                     </div>
 
-                    <div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Message <span className="text-red-500">*</span>
                       </label>
-                      <textarea
+                      <motion.textarea
                         name="message"
                         value={formState.message}
                         onChange={handleChange}
                         rows={5}
-                        className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-colors resize-none ${
+                        whileFocus={{ scale: 1.005, boxShadow: "0 0 0 3px rgba(14,165,233,0.15)" }}
+                        className={`w-full px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 resize-none ${
                           errors.message ? "border-red-500" : "border-border"
                         }`}
                         placeholder="How can we help you?"
                       />
                       {errors.message && (
-                        <p className="text-red-500 text-sm mt-1">{errors.message}</p>
+                        <motion.p
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="text-red-500 text-sm mt-1"
+                        >
+                          {errors.message}
+                        </motion.p>
                       )}
-                    </div>
+                    </motion.div>
 
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full"
-                      disabled={isSubmitting}
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.35 }}
                     >
-                      {isSubmitting ? (
-                        "Sending..."
-                      ) : (
-                        <>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full relative overflow-hidden"
+                        disabled={isSubmitting}
+                      >
+                        <motion.span
+                          className="flex items-center justify-center"
+                          animate={isSubmitting ? { opacity: 0, y: -20 } : { opacity: 1, y: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
                           <Send className="w-4 h-4 mr-2" />
                           Send Message
-                        </>
-                      )}
-                    </Button>
+                        </motion.span>
+                        {isSubmitting && (
+                          <motion.span
+                            className="absolute inset-0 flex items-center justify-center"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            <motion.span
+                              className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            />
+                            <span className="ml-2">Sending...</span>
+                          </motion.span>
+                        )}
+                      </Button>
+                    </motion.div>
                   </form>
                 )}
               </div>
