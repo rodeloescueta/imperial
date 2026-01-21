@@ -59,6 +59,7 @@ const getStatusConfig = (status: string) => {
         bg: "bg-green-50",
         border: "border-green-200",
         dot: "bg-green-500",
+        glow: "shadow-green-500/50",
         label: "Operational",
       }
     case "degraded":
@@ -68,6 +69,7 @@ const getStatusConfig = (status: string) => {
         bg: "bg-yellow-50",
         border: "border-yellow-200",
         dot: "bg-yellow-500",
+        glow: "shadow-yellow-500/50",
         label: "Degraded",
       }
     case "outage":
@@ -77,6 +79,7 @@ const getStatusConfig = (status: string) => {
         bg: "bg-red-50",
         border: "border-red-200",
         dot: "bg-red-500",
+        glow: "shadow-red-500/50",
         label: "Outage",
       }
     default:
@@ -86,6 +89,7 @@ const getStatusConfig = (status: string) => {
         bg: "bg-green-50",
         border: "border-green-200",
         dot: "bg-green-500",
+        glow: "shadow-green-500/50",
         label: "Operational",
       }
   }
@@ -101,21 +105,60 @@ export default function NetworkPage() {
     <main className="pt-16">
       {/* Status Banner */}
       <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         className={`py-6 ${statusConfig.bg} border-b ${statusConfig.border}`}
       >
         <div className="container-wide">
           <div className="flex items-center justify-center gap-3">
-            <div className={`w-3 h-3 rounded-full ${statusConfig.dot} animate-pulse`} />
-            <StatusIcon className={`w-5 h-5 ${statusConfig.color}`} />
-            <span className={`font-medium ${statusConfig.color}`}>
+            {/* Glowing status dot */}
+            <motion.div
+              className={`relative w-3 h-3 rounded-full ${statusConfig.dot}`}
+              animate={{
+                scale: [1, 1.2, 1],
+                boxShadow: [
+                  `0 0 0 0 currentColor`,
+                  `0 0 0 8px transparent`,
+                  `0 0 0 0 currentColor`,
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {/* Inner glow */}
+              <span className={`absolute inset-0 rounded-full ${statusConfig.dot} animate-ping opacity-75`} />
+            </motion.div>
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <StatusIcon className={`w-5 h-5 ${statusConfig.color}`} />
+            </motion.div>
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className={`font-medium ${statusConfig.color}`}
+            >
               {overallStatus === "operational"
                 ? "All Systems Operational"
                 : overallStatus === "degraded"
                 ? "Some Systems Experiencing Issues"
                 : "Major Outage Detected"}
-            </span>
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-sm text-muted-foreground ml-4"
+            >
+              Last updated: Just now
+            </motion.span>
           </div>
         </div>
       </motion.section>
@@ -190,7 +233,9 @@ export default function NetworkPage() {
                           </td>
                           <td className="px-6 py-4">
                             <span className={`inline-flex items-center gap-2 ${areaStatus.color}`}>
-                              <span className={`w-2 h-2 rounded-full ${areaStatus.dot}`} />
+                              <span className={`relative w-2 h-2 rounded-full ${areaStatus.dot}`}>
+                                <span className={`absolute inset-0 rounded-full ${areaStatus.dot} animate-ping opacity-50`} />
+                              </span>
                               {areaStatus.label}
                             </span>
                           </td>
