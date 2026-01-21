@@ -1,0 +1,16 @@
+{
+  "covered": [
+    { "name": "Imus", "zip": "4103", "coords": { "x": 45, "y": 30 } },
+    { "name": "Bacoor", "zip": "4102", "coords": { "x": 50, "y": 25 } },
+    { "name": "Dasmarinas", "zip": "4114", "coords": { "x": 40, "y": 45 } },
+    { "name": "General Trias", "zip": "4107", "coords": { "x": 35, "y": 40 } },
+    { "name": "Cavite City", "zip": "4100", "coords": { "x": 60, "y": 20 } }
+  ],
+  "coming_soon": [
+    { "name": "Kawit", "zip": "4104", "coords": { "x": 55, "y": 22 } },
+    { "name": "Noveleta", "zip": "4105", "coords": { "x": 58, "y": 24 } },
+    { "name": "Rosario", "zip": "4106", "coords": { "x": 52, "y": 28 } },
+    { "name": "Tanza", "zip": "4108", "coords": { "x": 30, "y": 35 } },
+    { "name": "Naic", "zip": "4110", "coords": { "x": 25, "y": 50 } }
+  ]
+}

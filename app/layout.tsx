@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "@/components/Navbar";
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-sans",
 });
 
 export const metadata: Metadata = {
-  title: "Crack Editing™ - Make Your Videos Highly Addictive",
+  title: "Imperial Internet | Fast. Reliable. Local.",
   description:
-    "crack editing™ is an online training program that teaches a psychology-driven editing system for attention, emotion, and retention.",
+    "Imperial Internet - Fiber internet provider for Cavite, Philippines. Fast, reliable, and locally supported internet for homes and businesses.",
+  keywords: ["internet", "fiber", "ISP", "Cavite", "Philippines", "broadband"],
 };
 
 export default function RootLayout({
@@ -26,10 +21,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${figtree.variable} overflow-x-hidden`}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen overflow-x-hidden`}
-      >
+    <html lang="en" className={`${inter.variable}`}>
+      <body className="antialiased min-h-screen">
+        <Navbar />
         {children}
       </body>
     </html>

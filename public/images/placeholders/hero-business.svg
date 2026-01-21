@@ -1,0 +1,43 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#F8FAFC"/>
+
+  <!-- Background gradient -->
+  <rect width="800" height="600" fill="url(#gradient-biz)"/>
+
+  <!-- Office building silhouette -->
+  <rect x="250" y="150" width="300" height="300" fill="#E2E8F0"/>
+  <rect x="280" y="180" width="50" height="40" fill="#94A3B8"/>
+  <rect x="350" y="180" width="50" height="40" fill="#94A3B8"/>
+  <rect x="420" y="180" width="50" height="40" fill="#94A3B8"/>
+  <rect x="280" y="240" width="50" height="40" fill="#94A3B8"/>
+  <rect x="350" y="240" width="50" height="40" fill="#94A3B8"/>
+  <rect x="420" y="240" width="50" height="40" fill="#94A3B8"/>
+  <rect x="280" y="300" width="50" height="40" fill="#94A3B8"/>
+  <rect x="350" y="300" width="50" height="40" fill="#94A3B8"/>
+  <rect x="420" y="300" width="50" height="40" fill="#94A3B8"/>
+  <rect x="350" y="380" width="100" height="70" fill="#CBD5E1"/>
+
+  <!-- Connection lines -->
+  <g stroke="#0EA5E9" stroke-width="3" stroke-dasharray="8,4">
+    <line x1="550" y1="200" x2="650" y2="150"/>
+    <line x1="550" y1="300" x2="680" y2="300"/>
+    <line x1="550" y1="400" x2="650" y2="450"/>
+  </g>
+
+  <!-- Server/cloud icons -->
+  <circle cx="680" cy="150" r="30" fill="#0EA5E9" opacity="0.2"/>
+  <circle cx="710" cy="300" r="30" fill="#0EA5E9" opacity="0.2"/>
+  <circle cx="680" cy="450" r="30" fill="#0EA5E9" opacity="0.2"/>
+
+  <!-- Text placeholder -->
+  <text x="400" y="520" text-anchor="middle" fill="#64748B" font-family="system-ui" font-size="16">
+    Placeholder - Business office connectivity
+  </text>
+
+  <defs>
+    <linearGradient id="gradient-biz" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8FAFC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F1F5F9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

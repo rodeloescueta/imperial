@@ -23,38 +23,50 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Goal**: Replicate the "Crack Editing" course landing page (originally built with Lovable) using Next.js + shadcn/ui + Framer Motion, with enhanced animations and interactivity to create a "next level" experience.
+**Goal**: Build a modern, simple website for Imperial Internet - a local fiber internet provider targeting Cavite, Philippines. Inspired by Google Fiber's clean layout and Fraxbit's smooth animations.
 
 ### Design Theme
-- **Primary Background**: Dark blue/navy
-- **Accent Colors**: Orange (CTAs, highlights) + Purple (secondary accents)
-- **Key Goal**: Make the scroll experience "highly addictive" with smooth animations
+- **Primary Background**: White (#FFFFFF) - 70% of the design
+- **Primary Accent**: Sky Blue (#0EA5E9) - 30% for CTAs, highlights, icons
+- **Text Colors**: Dark Gray (#1F2937) for headings, Gray (#6B7280) for descriptions
+- **Key Goal**: Clean, minimal design with smooth Framer Motion animations
 
 ### Animation Inspiration
-- **Snowball Agency** (https://www.snowball.agency/) - Infinite marquee, animated stats counters, bold typography
-- **Apple iPhone Air** (https://www.apple.com/iphone-air/) - Parallax scrolling, sticky nav, tab galleries
-- **Key Effects**: Parallax, scroll-triggered reveals, text split animations, number counters
+- **Google Fiber** (https://fiber.google.com/) - Clean layout, simple pricing cards, coverage checker
+- **Fraxbit** (https://fraxbit.com/) - GSAP scroll animations, hover effects, animated counters
+- **Key Effects**: Scroll-triggered reveals, hover effects on cards/buttons, animated number counters
 
 ### Critical Requirements
 - **Mobile Responsiveness**: App MUST be fully responsive (mobile-first approach)
 - **Testing**: Use Playwright MCP to validate each section after implementation
 - **Breakpoints**: Mobile (320-639px), Tablet (640-1023px), Desktop (1024px+)
 
-### Page Sections (10 total)
-1. Hero - Main headline + CTAs + trust badges
-2. Before/After Carousel - Creator transformation comparisons
-3. Problem vs Solution - Two-column comparison cards
-4. Course Modules - 6 module cards grid
-5. Is This For Me - Qualifier/disqualifier cards
-6. What You Get - 6 feature cards
-7. Meet The Creators - Limitless.inc bio + stats
-8. Pricing - $297 pricing card
-9. FAQ - 7-question accordion
-10. Footer - Links + contact
+### Navigation Structure
+```
+[Logo] | Essential | Prime | Contact Us | Network | [Check Coverage CTA]
+```
+- **Essential** (`/`) - Residential plans (home page) - hover shows "Residential"
+- **Prime** (`/prime`) - Business plans (SME & Corporate) - hover shows "Business"
+- **Contact Us** (`/contact`) - Contact form and info
+- **Network** (`/network`) - Maintenance schedule & status - hover shows "Maintenance"
+
+### Essential Page Sections (Home)
+1. Hero - Headline + Coverage Checker
+2. Residential Plans - 3-tier pricing cards
+3. Features - Why Choose Us icon cards
+4. Coverage Map - Cavite map with heat zones (Google Fiber style)
+5. Stats - Animated counters
+6. Footer
+
+### Prime Page Sections
+1. Hero - Business headline
+2. SME Plans - 2-tier pricing
+3. Corporate Plans - 2-tier pricing
+4. Business Features
 
 ### Reference
-- Screenshots: `/temp/` directory
-- Main task documentation: `.claude/tasks/MAIN_PROJECT.md`
+- Full PRD: `/PRD.md`
+- Coverage data: `/data/coverage.json`
 
 ---
 
@@ -76,7 +88,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ```bash
-npm run dev      # Start development server (localhost:3000)
+npm run dev      # Start development server (localhost:3011)
 npm run build    # Production build
 npm run start    # Start production server
 npm run lint     # Run ESLint

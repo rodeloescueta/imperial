@@ -1,7 +1,7 @@
 # Project Context
 
 ## Purpose
-Replicate the "Crack Editing" course landing page (originally built with Lovable) using Next.js + shadcn/ui + Framer Motion, with enhanced animations and interactivity to create a "next level" scroll experience.
+Build a modern, simple website for Imperial Internet - a local fiber internet provider targeting Cavite, Philippines. Inspired by Google Fiber's clean layout and Fraxbit's smooth animations.
 
 ## Tech Stack
 - **Next.js 16** with App Router and React Server Components
@@ -26,6 +26,7 @@ Replicate the "Crack Editing" course landing page (originally built with Lovable
 - Client components only when needed for interactivity
 - shadcn/ui components in `components/ui/`
 - Application components in `components/`
+- Section components in `components/sections/`
 - Utilities in `lib/utils.ts`
 
 ### Testing Strategy
@@ -37,13 +38,28 @@ Replicate the "Crack Editing" course landing page (originally built with Lovable
 - Feature branches for each phase
 - Descriptive commit messages with co-author attribution
 - PR-based workflow with review
+- Do NOT auto-push or deploy without explicit user approval
 
 ## Domain Context
-- **Target**: Video editing course landing page
-- **Audience**: Content creators wanting to improve video editing skills
-- **Brand**: "Crack Editing" by Limitless.inc
-- **Theme**: Dark blue/navy background, orange CTAs, purple accents
-- **Key Goal**: Make scroll experience "highly addictive"
+- **Business**: Imperial Internet - Local fiber internet provider
+- **Target Market**: Cavite, Philippines (initial), expanding later
+- **Audience**: Residential (Essential plans) and Business (Prime plans) customers
+- **Theme**: 70% White, 30% Sky Blue (#0EA5E9) accent
+- **Key Goal**: Clean, minimal design with smooth animations
+
+## Site Structure
+- `/` - Essential (Residential plans, home page)
+- `/prime` - Prime (Business plans - SME & Corporate)
+- `/contact` - Contact Us page
+- `/network` - Network status and maintenance schedule
+
+## Navigation
+```
+[Logo] | Essential | Prime | Contact Us | Network | [Check Coverage CTA]
+```
+- Essential → hover shows "Residential"
+- Prime → hover shows "Business"
+- Network → hover shows "Maintenance"
 
 ## Important Constraints
 - Mobile-first responsive design (320px - 1440px+)
@@ -51,10 +67,9 @@ Replicate the "Crack Editing" course landing page (originally built with Lovable
 - Accessibility: Minimum 44px touch targets on mobile
 - SEO: Server-rendered where possible
 
-## External Dependencies
-- Unsplash for placeholder images (replace before production)
-- No external APIs in Phase 1
+## Data Sources
+- `/data/coverage.json` - Coverage checker data (municipalities, ZIP codes)
 
-## Animation Inspiration
-- **Snowball Agency** - Infinite marquee, animated stats counters
-- **Apple iPhone Air** - Parallax scrolling, sticky nav, tab galleries
+## Design Inspiration
+- **Google Fiber** (https://fiber.google.com/) - Clean layout, pricing cards, coverage map
+- **Fraxbit** (https://fraxbit.com/) - Scroll animations, hover effects, animated counters

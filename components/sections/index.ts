@@ -1,10 +1,12 @@
-export { HeroSection } from "./hero"
-export { TransformationCarousel } from "./transformation-carousel"
-export { ProblemSolutionSection } from "./problem-solution"
-export { CourseModulesSection } from "./course-modules"
-export { ForMeSection } from "./for-me"
-export { WhatYouGetSection } from "./what-you-get"
-export { CreatorsSection } from "./creators"
-export { PricingSection } from "./pricing"
-export { FAQSection } from "./faq"
-export { Footer } from "./footer"
+// Imperial Internet Sections
+export { Hero } from "./Hero"
+export { ResidentialPlans } from "./ResidentialPlans"
+export { Features } from "./Features"
+export { CoverageMap } from "./CoverageMap"
+export { Stats } from "./Stats"
+export { Footer } from "./Footer"
+
+// Business Sections
+export { BusinessHero } from "./BusinessHero"
+export { BusinessPlans } from "./BusinessPlans"
+export { BusinessFeatures } from "./BusinessFeatures"

@@ -1,0 +1,31 @@
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="600" fill="#F8FAFC"/>
+
+  <!-- Background gradient -->
+  <rect width="800" height="600" fill="url(#gradient)"/>
+
+  <!-- House silhouette -->
+  <path d="M400 150 L550 280 L550 450 L250 450 L250 280 Z" fill="#E2E8F0"/>
+  <rect x="300" y="350" width="80" height="100" fill="#CBD5E1"/>
+  <rect x="420" y="300" width="60" height="60" fill="#94A3B8"/>
+
+  <!-- WiFi symbol -->
+  <g transform="translate(400, 350)">
+    <path d="M0 -60 Q-80 -30 -80 30 Q-80 90 0 120 Q80 90 80 30 Q80 -30 0 -60" fill="none" stroke="#0EA5E9" stroke-width="8" stroke-linecap="round" opacity="0.3"/>
+    <path d="M0 -40 Q-50 -20 -50 20 Q-50 60 0 80 Q50 60 50 20 Q50 -20 0 -40" fill="none" stroke="#0EA5E9" stroke-width="8" stroke-linecap="round" opacity="0.5"/>
+    <path d="M0 -20 Q-25 -10 -25 10 Q-25 30 0 40 Q25 30 25 10 Q25 -10 0 -20" fill="none" stroke="#0EA5E9" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+    <circle cx="0" cy="20" r="12" fill="#0EA5E9"/>
+  </g>
+
+  <!-- Text placeholder -->
+  <text x="400" y="520" text-anchor="middle" fill="#64748B" font-family="system-ui" font-size="16">
+    Placeholder - Family using internet at home
+  </text>
+
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F0F9FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E0F2FE;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
