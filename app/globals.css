@@ -1,0 +1,418 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Aceternity UI: Background Ripple Effect animation */
+  --animate-cell-ripple: cell-ripple var(--duration, 200ms) ease-out none var(--delay, 0ms);
+
+  @keyframes cell-ripple {
+    0% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+  }
+
+  /* Marquee animation variable (keyframes defined globally below) */
+  --animate-marquee: marquee 30s linear infinite;
+
+  /* CTA Pulse animation for primary buttons */
+  --animate-cta-pulse: cta-pulse 2s ease-in-out infinite;
+
+  @keyframes cta-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 oklch(0.75 0.18 55 / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 8px oklch(0.75 0.18 55 / 0);
+    }
+  }
+
+  @keyframes badge-glow {
+    0%, 100% {
+      box-shadow: 0 0 15px oklch(0.75 0.18 55 / 0.15);
+    }
+    50% {
+      box-shadow: 0 0 25px oklch(0.75 0.18 55 / 0.25);
+    }
+  }
+
+  --animate-badge-glow: badge-glow 3s ease-in-out infinite;
+
+  /* Text shimmer animation for dramatic headings */
+  @keyframes text-shimmer {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  --animate-text-shimmer: text-shimmer 3s linear infinite;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+:root {
+  /* Ice-blue light theme - based on iceberg tip colors */
+  --background: oklch(0.96 0.015 210);           /* Light ice-blue */
+  --foreground: oklch(0.15 0.03 240);            /* Dark navy text */
+  --card: oklch(0.92 0.025 210);                 /* Slightly darker ice-blue */
+  --card-foreground: oklch(0.15 0.03 240);
+  --popover: oklch(0.94 0.02 210);
+  --popover-foreground: oklch(0.15 0.03 240);
+
+  /* Primary - Orange for CTAs (darker for light bg contrast) */
+  --primary: oklch(0.65 0.18 55);
+  --primary-foreground: oklch(0.99 0.02 95);
+
+  /* Secondary - Muted ice-blue for secondary actions */
+  --secondary: oklch(0.88 0.025 210);
+  --secondary-foreground: oklch(0.20 0.03 240);
+
+  /* Muted - For subtle backgrounds */
+  --muted: oklch(0.88 0.02 210);
+  --muted-foreground: oklch(0.45 0.03 240);      /* Medium gray text */
+
+  /* Accent - Sky Blue for highlights */
+  --accent: oklch(0.65 0.15 220);
+  --accent-foreground: oklch(0.99 0.01 210);
+
+  /* Destructive - Red for errors */
+  --destructive: oklch(0.55 0.22 25);
+
+  /* Borders and inputs - dark borders on light bg */
+  --border: oklch(0.15 0.02 240 / 12%);
+  --input: oklch(0.90 0.02 210);
+  --ring: oklch(0.65 0.18 55);
+
+  /* Chart colors */
+  --chart-1: oklch(0.65 0.18 55);
+  --chart-2: oklch(0.65 0.15 220);
+  --chart-3: oklch(0.55 0.15 200);
+  --chart-4: oklch(0.60 0.12 150);
+  --chart-5: oklch(0.50 0.10 100);
+
+  --radius: 0.45rem;
+
+  /* Sidebar */
+  --sidebar: oklch(0.94 0.02 210);
+  --sidebar-foreground: oklch(0.15 0.03 240);
+  --sidebar-primary: oklch(0.65 0.18 55);
+  --sidebar-primary-foreground: oklch(0.99 0.02 95);
+  --sidebar-accent: oklch(0.65 0.15 220);
+  --sidebar-accent-foreground: oklch(0.99 0.01 210);
+  --sidebar-border: oklch(0.15 0.02 240 / 10%);
+  --sidebar-ring: oklch(0.65 0.18 55);
+
+  /* Custom: Orange gradient stops */
+  --gradient-orange-from: oklch(0.70 0.18 50);
+  --gradient-orange-to: oklch(0.60 0.20 60);
+
+  /* Custom: Light blue gradient stops */
+  --gradient-blue-from: oklch(0.70 0.15 220);
+  --gradient-blue-to: oklch(0.60 0.18 210);
+
+  /* Custom: Purple gradient stops */
+  --gradient-purple-from: oklch(0.55 0.25 290);
+  --gradient-purple-to: oklch(0.45 0.28 270);
+
+  /* Section alternating backgrounds - ice-blue variations */
+  --section-dark: oklch(0.90 0.02 210);          /* Darker ice-blue section */
+  --section-light: oklch(0.97 0.015 210);        /* Lighter ice-blue section */
+
+  /* Light section text colors */
+  --light-section-text: oklch(0.20 0.02 240);
+  --light-section-muted: oklch(0.45 0.02 240);
+}
+
+.dark {
+  /* Snowball-inspired: Near-black background with blue tint */
+  --background: oklch(0.08 0.02 240);
+  --foreground: oklch(0.98 0.01 240);
+
+  /* Card - slightly lighter for separation */
+  --card: oklch(0.12 0.025 240);
+  --card-foreground: oklch(0.98 0.01 240);
+
+  /* Popover */
+  --popover: oklch(0.12 0.025 240);
+  --popover-foreground: oklch(0.98 0.01 240);
+
+  /* Primary - Orange for CTAs (pops on dark bg) */
+  --primary: oklch(0.75 0.18 55);
+  --primary-foreground: oklch(0.15 0.03 55);
+
+  /* Secondary - Muted for secondary actions */
+  --secondary: oklch(0.18 0.025 240);
+  --secondary-foreground: oklch(0.95 0.01 240);
+
+  /* Muted - For subtle backgrounds */
+  --muted: oklch(0.15 0.02 240);
+  --muted-foreground: oklch(0.65 0.02 240);
+
+  /* Accent - Sky Blue for highlights (Snowball uses purple, we use light blue) */
+  --accent: oklch(0.75 0.15 220);
+  --accent-foreground: oklch(0.15 0.02 240);
+
+  /* Destructive - Red for errors */
+  --destructive: oklch(0.60 0.22 25);
+
+  /* Borders and inputs */
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.75 0.18 55);
+
+  /* Chart colors */
+  --chart-1: oklch(0.75 0.18 55);
+  --chart-2: oklch(0.75 0.15 220);
+  --chart-3: oklch(0.65 0.15 200);
+  --chart-4: oklch(0.70 0.12 150);
+  --chart-5: oklch(0.60 0.10 100);
+
+  /* Sidebar */
+  --sidebar: oklch(0.10 0.02 240);
+  --sidebar-foreground: oklch(0.98 0.01 240);
+  --sidebar-primary: oklch(0.75 0.18 55);
+  --sidebar-primary-foreground: oklch(0.15 0.03 55);
+  --sidebar-accent: oklch(0.75 0.15 220);
+  --sidebar-accent-foreground: oklch(0.15 0.02 240);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.75 0.18 55);
+
+  /* Custom: Orange gradient stops */
+  --gradient-orange-from: oklch(0.78 0.18 50);
+  --gradient-orange-to: oklch(0.70 0.20 60);
+
+  /* Custom: Light blue gradient stops (replacing purple) */
+  --gradient-blue-from: oklch(0.78 0.15 220);
+  --gradient-blue-to: oklch(0.68 0.18 210);
+
+  /* Custom: Purple gradient stops */
+  --gradient-purple-from: oklch(0.65 0.25 290);
+  --gradient-purple-to: oklch(0.55 0.28 270);
+
+  /* Section alternating backgrounds - Snowball style */
+  --section-dark: oklch(0.06 0.015 240);
+  --section-light: oklch(0.97 0.015 220);
+
+  /* Light section text colors (for use in ice-blue sections) */
+  --light-section-text: oklch(0.20 0.02 240);
+  --light-section-muted: oklch(0.45 0.02 240);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* Focus states for accessibility */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+
+  /* Button and interactive element focus */
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary ring-2 ring-primary/30;
+  }
+
+  /* Skip to content link (hidden until focused) */
+  .skip-to-content {
+    @apply absolute -top-10 left-4 z-[100] bg-primary text-primary-foreground px-4 py-2 rounded-md font-medium;
+    @apply focus:top-4 transition-all;
+  }
+
+  /* Scrollbar styling */
+  html {
+    overflow-y: scroll;
+  }
+
+  /* Custom scrollbar styling for light theme */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(0.75 0.02 210);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.65 0.03 210);
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Global keyframes for marquee animation (used by inline styles) */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* Typography utilities */
+@layer utilities {
+  .text-gradient-orange {
+    @apply bg-gradient-to-r from-[var(--gradient-orange-from)] to-[var(--gradient-orange-to)] bg-clip-text text-transparent;
+  }
+
+  .text-gradient-purple {
+    @apply bg-gradient-to-r from-[var(--gradient-purple-from)] to-[var(--gradient-purple-to)] bg-clip-text text-transparent;
+  }
+
+  /* Heading sizes - responsive */
+  .text-display {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+  }
+
+  .text-headline {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
+  }
+
+  .text-title {
+    @apply text-2xl sm:text-3xl font-semibold tracking-tight;
+  }
+
+  .text-subtitle {
+    @apply text-lg sm:text-xl text-muted-foreground;
+  }
+
+  .text-body {
+    @apply text-base text-muted-foreground;
+  }
+
+  .text-small {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* Section background utilities */
+  .section-dark {
+    background-color: var(--section-dark);
+  }
+
+  .section-light {
+    background-color: var(--section-light);
+  }
+
+  /* CTA pulse animation for important buttons */
+  .cta-pulse {
+    animation: var(--animate-cta-pulse);
+  }
+
+  .cta-pulse:hover {
+    animation: none;
+  }
+
+  /* Badge glow animation */
+  .animate-badge-glow {
+    animation: var(--animate-badge-glow);
+  }
+
+  /* Text shimmer animation for dramatic headings */
+  .animate-text-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(103, 232, 249, 1) 25%,
+      rgba(255, 255, 255, 1) 50%,
+      rgba(103, 232, 249, 1) 75%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: var(--animate-text-shimmer);
+  }
+
+  /* Custom scrollbar for modules section */
+  .scrollbar-modules {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.55 0.20 290) transparent;
+  }
+
+  .scrollbar-modules::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-modules::-webkit-scrollbar-track {
+    background: oklch(0.92 0.02 210 / 50%);
+    border-radius: 3px;
+    margin: 8px 0;
+  }
+
+  .scrollbar-modules::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, oklch(0.60 0.22 290), oklch(0.50 0.25 270));
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+
+  .scrollbar-modules::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, oklch(0.65 0.24 290), oklch(0.55 0.27 270));
+  }
+}
