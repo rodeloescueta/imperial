@@ -12,7 +12,7 @@ Working on scroll animation sections that will connect emotionally with customer
 | Option | Name | Status |
 |--------|------|--------|
 | A | Internet Struggles → Imperial Saves the Day | ✅ Implemented |
-| B | The Neighborhood Transformation | Pending |
+| B | The Neighborhood Transformation | ✅ Implemented |
 | C | David vs Goliath - Market Disruption | ✅ Implemented |
 | D | Speed Race Comparison | Pending |
 | E | The Loading Screen We All Hate | Pending |
@@ -39,7 +39,7 @@ Working on scroll animation sections that will connect emotionally with customer
 
 ---
 
-## Option B: "The Neighborhood Transformation"
+## Option B: "The Neighborhood Transformation" ✅
 
 **Concept**: A street of houses with bad internet → Imperial fiber cable installs → Neighborhood lights up
 
@@ -50,6 +50,82 @@ Working on scroll animation sections that will connect emotionally with customer
 4. Final: Happy neighborhood, all connected
 
 **Message**: "We're wiring Cavite, one barangay at a time."
+
+**Implementation**: Completed
+- `components/ui/neighborhood-reveal.tsx` - SVG scroll animation with houses and fiber cable
+- `components/sections/NeighborhoodTransformation.tsx` - Section wrapper
+
+---
+
+## Option B Implementation Plan
+
+### Overview
+
+Create a scroll-animated section showing a row of houses with weak WiFi signals that transform as Imperial's fiber cable is installed underground. Each house lights up with strong signal as the cable passes, culminating in a happy, connected neighborhood.
+
+### Files to Create
+
+1. **`components/ui/neighborhood-reveal.tsx`** - The scroll animation component with SVG houses and fiber cable
+2. **`components/sections/NeighborhoodTransformation.tsx`** - The section wrapper with header and benefits
+
+### Visual Design
+
+**Layout**: Two-column grid - animation on right, benefits on left (alternate from Option A)
+
+**SVG Animation Elements**:
+- 5 houses in a row (varied sizes/styles for visual interest)
+- Weak WiFi signal icons above each house (red/orange, 1-2 bars)
+- Underground fiber cable line that "draws" from left to right
+- Strong WiFi signal icons (green, full bars) replacing weak ones
+- Subtle glow effect on houses as they connect
+- Optional: Small happy face or checkmark appearing on connected houses
+
+**Color Palette**:
+- Houses: Warm grays/whites with colored roofs
+- Bad signal: Red (#ef4444) / Orange (#f97316)
+- Fiber cable: Sky blue (#0ea5e9) with glow
+- Good signal: Green (#22c55e)
+- Connected glow: Sky blue (#0ea5e9) soft glow
+
+**Scroll Animation Flow**:
+1. `scrollYProgress [0, 0.2]` - All houses visible with weak signals
+2. `scrollYProgress [0.2, 0.7]` - Fiber cable draws from left to right underground
+3. `scrollYProgress [0.25, 0.75]` - Houses light up sequentially as cable passes (staggered)
+   - House 1: [0.25, 0.35]
+   - House 2: [0.35, 0.45]
+   - House 3: [0.45, 0.55]
+   - House 4: [0.55, 0.65]
+   - House 5: [0.65, 0.75]
+4. `scrollYProgress [0.7, 0.85]` - All connected, neighborhood glows warmly
+5. Labels fade in with staggered timing
+
+**Benefits List** (left side):
+- "Fiber to Your Door" - Direct fiber connection, not shared copper
+- "Whole Barangay Coverage" - We don't leave neighbors behind
+- "Quick Installation" - Usually within 3-5 business days
+- "Future-Proof Network" - Infrastructure built to last decades
+
+### Implementation Tasks
+
+1. [x] Create `neighborhood-reveal.tsx` with:
+   - SVG houses (5 varied designs)
+   - Weak/strong WiFi signal icons
+   - Underground fiber cable with draw animation
+   - Sequential house lighting effect
+   - Scroll-based transforms using `useScroll` and `useTransform`
+   - Reduced motion fallback
+
+2. [x] Create `NeighborhoodTransformation.tsx` section with:
+   - Section header with badge, title, subtitle
+   - Two-column layout (benefits left, animation right)
+   - Benefits list with icons
+   - Bottom quote/CTA
+
+3. [x] Export from `components/sections/index.ts`
+
+4. [x] Add to `app/page.tsx` (place after InternetStruggles, before MarketDisruption)
+
+5. [x] Test responsiveness on mobile/tablet/desktop
 
 ---
 

@@ -3,6 +3,7 @@ import {
   ResidentialPlans,
   Features,
   InternetStruggles,
+  NeighborhoodTransformation,
   MarketDisruption,
   CoverageMap,
   Stats,
@@ -23,6 +24,9 @@ export default function EssentialPage() {
 
       {/* Internet Struggles Section */}
       <InternetStruggles />
+
+      {/* Neighborhood Transformation Section */}
+      <NeighborhoodTransformation />
 
       {/* Market Disruption Section */}
       <MarketDisruption />
