@@ -4,6 +4,7 @@ import {
   Features,
   InternetStruggles,
   NeighborhoodTransformation,
+  LoadingBreakthrough,
   MarketDisruption,
   CoverageMap,
   Stats,
@@ -27,6 +28,9 @@ export default function EssentialPage() {
 
       {/* Neighborhood Transformation Section */}
       <NeighborhoodTransformation />
+
+      {/* Loading Breakthrough Section */}
+      <LoadingBreakthrough />
 
       {/* Market Disruption Section */}
       <MarketDisruption />
