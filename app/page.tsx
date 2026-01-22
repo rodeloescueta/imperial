@@ -2,6 +2,7 @@ import {
   Hero,
   ResidentialPlans,
   Features,
+  InternetStruggles,
   MarketDisruption,
   CoverageMap,
   Stats,
@@ -19,6 +20,9 @@ export default function EssentialPage() {
 
       {/* Why Choose Us Features */}
       <Features />
+
+      {/* Internet Struggles Section */}
+      <InternetStruggles />
 
       {/* Market Disruption Section */}
       <MarketDisruption />

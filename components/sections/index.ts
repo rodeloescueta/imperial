@@ -2,6 +2,7 @@
 export { Hero } from "./Hero"
 export { ResidentialPlans } from "./ResidentialPlans"
 export { Features } from "./Features"
+export { InternetStruggles } from "./InternetStruggles"
 export { MarketDisruption } from "./MarketDisruption"
 export { CoverageMap } from "./CoverageMap"
 export { Stats } from "./Stats"
