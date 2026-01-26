@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: imperial_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: imperial
+      POSTGRES_USER: imperial_admin
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U imperial_admin -d imperial"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+volumes:
+  postgres_data:
