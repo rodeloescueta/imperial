@@ -1,8 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { Loader, Zap, Download, Wifi } from "lucide-react"
-import { LoadingBreakthrough as LoadingBreakthroughAnimation } from "@/components/ui/loading-breakthrough"
 
 const benefits = [
   {
@@ -52,8 +52,28 @@ const itemVariants = {
 }
 
 export function LoadingBreakthrough() {
+  const sectionRef = useRef<HTMLDivElement>(null)
+
+  // Track scroll progress for the collision animation
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "center center"]
+  })
+
+  // Transform scroll progress to x position for collision effect
+  // Left image: starts at -150px, moves to 0
+  // Right image: starts at 150px, moves to 0
+  const leftX = useTransform(scrollYProgress, [0, 1], [-150, 0])
+  const rightX = useTransform(scrollYProgress, [0, 1], [150, 0])
+
+  // Opacity tied to scroll - fade in as they approach
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0.3, 1])
+
+  // Scale effect - subtle grow on collision
+  const scale = useTransform(scrollYProgress, [0.7, 1], [0.95, 1])
+
   return (
-    <section className="py-20 section-white overflow-hidden">
+    <section ref={sectionRef} className="py-20 section-white overflow-hidden">
       <div className="container-wide">
         {/* Section Header */}
         <motion.div
@@ -61,7 +81,7 @@ export function LoadingBreakthrough() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
@@ -93,16 +113,113 @@ export function LoadingBreakthrough() {
           </motion.p>
         </motion.div>
 
-        {/* Centered Animation */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-xl mx-auto mb-16"
-        >
-          <LoadingBreakthroughAnimation />
-        </motion.div>
+        {/* Fraxbit-Style Two-Sided Comparison */}
+        <div className="relative flex flex-col lg:flex-row items-stretch justify-between gap-8 lg:gap-4 mb-20">
+          {/* Left Side - Without (Bad Internet) */}
+          <div className="flex-1 flex flex-col lg:flex-row items-center gap-6">
+            {/* Collision Animation - Left Image */}
+            <motion.div
+              style={{ x: leftX, opacity, scale }}
+              className="relative w-full lg:w-auto overflow-hidden"
+            >
+              {/* Placeholder Image - Left */}
+              <div className="w-full lg:w-[280px] xl:w-[320px] h-[400px] lg:h-[480px] bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center">
+                <div className="text-center text-gray-400">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-gray-300 flex items-center justify-center">
+                    <Loader className="w-8 h-8 animate-spin" />
+                  </div>
+                  <p className="text-sm font-medium">Image Placeholder</p>
+                </div>
+              </div>
+              {/* Reveal overlay bar */}
+              <motion.div
+                initial={{ x: "-100%" }}
+                whileInView={{ x: "100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1], delay: 0.2 }}
+                className="absolute inset-0 bg-gray-400 z-10"
+              />
+            </motion.div>
+
+            {/* Left Text Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-center lg:text-left"
+            >
+              <span className="text-xs font-semibold tracking-wider text-gray-400 mb-2 block">
+                [ WITHOUT ]
+              </span>
+              <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
+                Slow
+              </h3>
+              <p className="text-3xl lg:text-4xl font-black text-gray-300 uppercase tracking-tight">
+                INTERNET
+              </p>
+              <p className="mt-4 text-muted-foreground max-w-[280px] text-sm lg:text-base">
+                Endless buffering, dropped connections, and downloads that never finish.
+              </p>
+              <div className="mt-4 w-12 h-1 bg-gray-300 mx-auto lg:mx-0" />
+            </motion.div>
+          </div>
+
+          {/* Center Divider - Desktop Only */}
+          <div className="hidden lg:flex items-center justify-center px-4">
+            <div className="w-px h-64 bg-gradient-to-b from-transparent via-border to-transparent" />
+          </div>
+
+          {/* Right Side - With Imperial (Fast Internet) */}
+          <div className="flex-1 flex flex-col-reverse lg:flex-row items-center gap-6">
+            {/* Right Text Content */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-center lg:text-right"
+            >
+              <span className="text-xs font-semibold tracking-wider text-primary mb-2 block">
+                [ WITH IMPERIAL ]
+              </span>
+              <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-1">
+                Blazing
+              </h3>
+              <p className="text-3xl lg:text-4xl font-black text-primary uppercase tracking-tight">
+                INTERNET
+              </p>
+              <p className="mt-4 text-muted-foreground max-w-[280px] text-sm lg:text-base">
+                Lightning-fast fiber speeds, rock-solid reliability, and seamless streaming.
+              </p>
+              <div className="mt-4 w-12 h-1 bg-primary mx-auto lg:ml-auto lg:mr-0" />
+            </motion.div>
+
+            {/* Collision Animation - Right Image */}
+            <motion.div
+              style={{ x: rightX, opacity, scale }}
+              className="relative w-full lg:w-auto overflow-hidden"
+            >
+              {/* Placeholder Image - Right */}
+              <div className="w-full lg:w-[280px] xl:w-[320px] h-[400px] lg:h-[480px] bg-gradient-to-br from-sky-100 to-sky-200 rounded-lg flex items-center justify-center">
+                <div className="text-center text-primary/60">
+                  <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-primary/20 flex items-center justify-center">
+                    <Zap className="w-8 h-8" />
+                  </div>
+                  <p className="text-sm font-medium">Image Placeholder</p>
+                </div>
+              </div>
+              {/* Reveal overlay bar */}
+              <motion.div
+                initial={{ x: "100%" }}
+                whileInView={{ x: "-100%" }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, ease: [0.65, 0, 0.35, 1], delay: 0.3 }}
+                className="absolute inset-0 bg-primary z-10"
+              />
+            </motion.div>
+          </div>
+        </div>
 
         {/* Benefits Grid */}
         <motion.div
@@ -129,19 +246,6 @@ export function LoadingBreakthrough() {
               </p>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Bottom Quote */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <p className="text-lg text-muted-foreground italic">
-            &ldquo;Forever.&rdquo;
-          </p>
         </motion.div>
 
         {/* Bottom decoration */}
