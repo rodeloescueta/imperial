@@ -106,7 +106,7 @@ async function main() {
   console.log("Cleared.")
 
   // Read CSV file
-  const csvPath = "/home/rodelo-escueta/Downloads/405_export_2026-01-26_173135.csv"
+  const csvPath = "/Users/johnpaullagda/Downloads/405_export_2026-01-26_173135.csv"
   if (!fs.existsSync(csvPath)) {
     console.error(`CSV file not found: ${csvPath}`)
     process.exit(1)

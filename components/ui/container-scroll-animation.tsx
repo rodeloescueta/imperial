@@ -92,7 +92,7 @@ export const Card = ({
         scale,
         opacity,
       }}
-      className="max-w-4xl mx-auto w-full mt-8"
+      className="max-w-7xl mx-auto w-full mt-8"
     >
       {children}
     </motion.div>

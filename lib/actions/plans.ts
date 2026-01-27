@@ -220,6 +220,95 @@ export async function updatePlan(id: string, formData: FormData) {
   redirect("/admin/plans")
 }
 
+// Public plan type (for website display)
+export type PublicPlan = {
+  id: string
+  name: string
+  tier: string
+  speed: number
+  price: number
+  type: string
+  features: string[]
+}
+
+// Public plan type with popularity data
+export type PublicPlanWithPopularity = PublicPlan & {
+  subscriberCount: number
+  popularityRank: number // 1 = most popular, 2 = second, etc.
+}
+
+// Get public plans by type (for website - no auth required)
+// Orders plans so top 3 most popular are in the center of the array
+export async function getPublicPlansByType(types: string | string[]): Promise<PublicPlanWithPopularity[]> {
+  const typeArray = Array.isArray(types) ? types : [types]
+
+  const plans = await prisma.plan.findMany({
+    where: {
+      isActive: true,
+      type: { in: typeArray },
+    },
+    orderBy: { price: "asc" },
+    select: {
+      id: true,
+      name: true,
+      tier: true,
+      speed: true,
+      price: true,
+      type: true,
+      features: true,
+      _count: {
+        select: { subscriptions: true },
+      },
+    },
+  })
+
+  // Add subscriber count and sort by popularity
+  const plansWithCount = plans.map((plan) => ({
+    id: plan.id,
+    name: plan.name,
+    tier: plan.tier,
+    speed: plan.speed,
+    price: plan.price,
+    type: plan.type,
+    features: plan.features,
+    subscriberCount: plan._count.subscriptions,
+  }))
+
+  // Sort by subscriber count descending to find top 3 most popular
+  const sortedByPopularity = [...plansWithCount].sort(
+    (a, b) => b.subscriberCount - a.subscriberCount
+  )
+
+  // Assign popularity rank
+  const plansWithRank = plansWithCount.map((plan) => ({
+    ...plan,
+    popularityRank: sortedByPopularity.findIndex((p) => p.id === plan.id) + 1,
+  }))
+
+  // Reorder: put top 3 most popular in the center
+  // Order: [others...] [3rd] [1st] [2nd] [others...]
+  if (plansWithRank.length >= 3) {
+    const top1 = plansWithRank.find((p) => p.popularityRank === 1)!
+    const top2 = plansWithRank.find((p) => p.popularityRank === 2)!
+    const top3 = plansWithRank.find((p) => p.popularityRank === 3)!
+    const others = plansWithRank
+      .filter((p) => p.popularityRank > 3)
+      .sort((a, b) => Number(a.price) - Number(b.price)) // Sort remaining by price
+
+    // Split others into left and right sides
+    const leftCount = Math.floor(others.length / 2)
+    const leftOthers = others.slice(0, leftCount)
+    const rightOthers = others.slice(leftCount)
+
+    // Final order: [left others] [3rd] [1st] [2nd] [right others]
+    const reordered = [...leftOthers, top3, top1, top2, ...rightOthers]
+    return serialize(reordered) as unknown as PublicPlanWithPopularity[]
+  }
+
+  // serialize converts Decimal to number at runtime
+  return serialize(plansWithRank) as unknown as PublicPlanWithPopularity[]
+}
+
 // Delete plan
 export async function deletePlan(id: string) {
   const session = await auth()

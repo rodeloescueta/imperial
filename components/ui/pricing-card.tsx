@@ -4,7 +4,17 @@ import * as React from "react"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { Check, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Tooltip } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
+import { getFeatureDescription } from "@/data/feature-descriptions"
+
+// Default features to show when plan has no features
+const defaultFeatures = [
+  "Unlimited data",
+  "Free installation",
+  "24/7 customer support",
+  "No lock-in period",
+]
 
 interface PricingCardProps {
   name: string
@@ -13,6 +23,7 @@ interface PricingCardProps {
   features: string[]
   popular?: boolean
   delay?: number
+  disableEntrance?: boolean
 }
 
 export function PricingCard({
@@ -22,6 +33,7 @@ export function PricingCard({
   features,
   popular = false,
   delay = 0,
+  disableEntrance = false,
 }: PricingCardProps) {
   const cardRef = React.useRef<HTMLDivElement>(null)
 
@@ -61,19 +73,26 @@ export function PricingCard({
     mouseY.set(0)
   }
 
+  // Entrance animation props (disabled for carousel use)
+  const entranceProps = disableEntrance
+    ? {}
+    : {
+        initial: { opacity: 0, y: 20 } as const,
+        whileInView: { opacity: 1, y: 0 } as const,
+        viewport: { once: true, margin: "-50px" } as const,
+        transition: {
+          type: "spring" as const,
+          stiffness: 100,
+          damping: 15,
+          mass: 1,
+          delay,
+        },
+      }
+
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        type: "spring",
-        stiffness: 100,
-        damping: 15,
-        mass: 1,
-        delay
-      }}
+      {...entranceProps}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -82,9 +101,9 @@ export function PricingCard({
         transformStyle: "preserve-3d",
       }}
       className={cn(
-        "relative flex flex-col p-6 bg-white rounded-2xl border transition-all duration-300 cursor-pointer group",
+        "relative flex flex-col p-6 bg-white rounded-2xl border transition-all duration-300 cursor-pointer group h-full min-h-[520px]",
         popular
-          ? "border-primary shadow-xl shadow-primary/20 scale-[1.02] z-10 animate-glow-border lg:scale-[1.05]"
+          ? "border-primary shadow-xl shadow-primary/20 scale-[1.02] z-10 lg:scale-[1.05]"
           : "border-border hover:border-primary/30 hover:shadow-lg hover:shadow-primary/10"
       )}
     >
@@ -155,33 +174,53 @@ export function PricingCard({
         <span className="text-muted-foreground">/mo</span>
       </div>
 
-      {/* Features with staggered animation */}
+      {/* Features with staggered animation and tooltips */}
       <ul className="mt-6 space-y-3 flex-1">
-        {features.map((feature, index) => (
-          <motion.li
-            key={index}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: delay + 0.3 + index * 0.08, duration: 0.3 }}
-            className="flex items-start gap-3 group/item"
-          >
-            <motion.div
-              whileHover={{ scale: 1.2, rotate: 10 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+        {(features.length > 0 ? features : defaultFeatures).map((feature, index) => {
+          const description = getFeatureDescription(feature)
+
+          const featureContent = (
+            <motion.li
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: delay + 0.3 + index * 0.08, duration: 0.3 }}
+              className={cn(
+                "flex items-start gap-3 group/item",
+                description && "cursor-help"
+              )}
             >
-              <Check
-                className={cn(
-                  "h-5 w-5 flex-shrink-0 mt-0.5 transition-colors",
-                  popular ? "text-primary" : "text-primary/70 group-hover/item:text-primary"
-                )}
-              />
-            </motion.div>
-            <span className="text-sm text-muted-foreground group-hover/item:text-foreground transition-colors">
-              {feature}
-            </span>
-          </motion.li>
-        ))}
+              <motion.div
+                whileHover={{ scale: 1.2, rotate: 10 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              >
+                <Check
+                  className={cn(
+                    "h-5 w-5 flex-shrink-0 mt-0.5 transition-colors",
+                    popular ? "text-primary" : "text-primary/70 group-hover/item:text-primary"
+                  )}
+                />
+              </motion.div>
+              <span className={cn(
+                "text-sm text-muted-foreground group-hover/item:text-foreground transition-colors",
+                description && "underline decoration-dotted decoration-muted-foreground/50 underline-offset-2"
+              )}>
+                {feature}
+              </span>
+            </motion.li>
+          )
+
+          if (description) {
+            return (
+              <Tooltip key={index} content={description} side="top">
+                {featureContent}
+              </Tooltip>
+            )
+          }
+
+          return featureContent
+        })}
       </ul>
 
       {/* CTA with enhanced animation */}
