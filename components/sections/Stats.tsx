@@ -3,11 +3,12 @@
 import { motion } from "framer-motion"
 import { Users, Wifi, HeadphonesIcon, TrendingUp } from "lucide-react"
 import { AnimatedCounter } from "@/components/ui/animated-counter"
+import { stats as planStats } from "@/data/plans"
 
 const stats = [
   {
     icon: Users,
-    value: 500,
+    value: planStats.customerCount,
     suffix: "+",
     label: "Happy Customers",
     description: "Homes and businesses connected",
@@ -16,7 +17,7 @@ const stats = [
   },
   {
     icon: Wifi,
-    value: 99.9,
+    value: planStats.uptime,
     suffix: "%",
     label: "Uptime",
     description: "Network reliability guaranteed",
@@ -25,7 +26,7 @@ const stats = [
   },
   {
     icon: HeadphonesIcon,
-    value: 24,
+    value: planStats.supportHours,
     suffix: "/7",
     label: "Support",
     description: "Local team ready to help",
@@ -34,7 +35,7 @@ const stats = [
   },
   {
     icon: TrendingUp,
-    value: 200,
+    value: planStats.maxSpeed,
     suffix: " Mbps",
     label: "Max Speed",
     description: "Blazing fast fiber connection",
@@ -107,7 +108,7 @@ export function Stats() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="text-subtitle max-w-2xl mx-auto"
           >
-            Join hundreds of satisfied customers who have made the switch to
+            Join thousands of satisfied customers who have made the switch to
             Imperial Internet.
           </motion.p>
         </motion.div>

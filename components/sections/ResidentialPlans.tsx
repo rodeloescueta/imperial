@@ -2,51 +2,7 @@
 
 import { motion } from "framer-motion"
 import { PricingCard } from "@/components/ui/pricing-card"
-
-const residentialPlans = [
-  {
-    name: "Essential 50",
-    speed: "50",
-    price: 1299,
-    features: [
-      "Unlimited data",
-      "Free installation",
-      "Free Wi-Fi router",
-      "24/7 customer support",
-      "No lock-in period",
-    ],
-    popular: false,
-  },
-  {
-    name: "Essential 100",
-    speed: "100",
-    price: 1799,
-    features: [
-      "Unlimited data",
-      "Free installation",
-      "Free Wi-Fi 6 router",
-      "24/7 priority support",
-      "No lock-in period",
-      "Free 1 month for referrals",
-    ],
-    popular: true,
-  },
-  {
-    name: "Essential 200",
-    speed: "200",
-    price: 2499,
-    features: [
-      "Unlimited data",
-      "Free installation",
-      "Free Wi-Fi 6 router",
-      "24/7 priority support",
-      "No lock-in period",
-      "Free 1 month for referrals",
-      "Static IP available",
-    ],
-    popular: false,
-  },
-]
+import { residentialPlans } from "@/data/plans"
 
 export function ResidentialPlans() {
   return (
@@ -72,13 +28,17 @@ export function ResidentialPlans() {
           </p>
         </motion.div>
 
-        {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Pricing Cards - 7 plans grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {residentialPlans.map((plan, index) => (
             <PricingCard
               key={plan.name}
-              {...plan}
-              delay={index * 0.1}
+              name={plan.name}
+              speed={plan.speed}
+              price={plan.price}
+              features={plan.features}
+              popular={plan.popular}
+              delay={index * 0.05}
             />
           ))}
         </div>
