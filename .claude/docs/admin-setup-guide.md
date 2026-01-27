@@ -38,6 +38,16 @@ The admin dashboard will be available at: **http://localhost:3011/admin/login**
 
 > **Important:** Change this password after first login in production!
 
+## Logging Out
+
+To sign out of the admin dashboard:
+
+1. Click on your **username/avatar** in the top-right corner of the header
+2. A dropdown menu will appear showing your name and email
+3. Click **"Sign out"** at the bottom of the menu
+
+You will be redirected to the login page at `/admin/login`.
+
 ---
 
 ## Detailed Setup Steps
