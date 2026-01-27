@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Wifi, LayoutDashboard, Users, MapPin, Building2, User } from "lucide-react"
+import { Wifi, LayoutDashboard, Users, MapPin, Building2, User, Zap } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SidebarProps {
@@ -16,8 +16,9 @@ interface SidebarProps {
 const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Users", href: "/admin/users", icon: Users },
+  { name: "Clients", href: "/admin/clients", icon: User },
+  { name: "Plans", href: "/admin/plans", icon: Zap },
   // Future routes (disabled for now)
-  { name: "Clients", href: "/admin/clients", icon: User, disabled: true },
   { name: "Coverage", href: "/admin/coverage", icon: MapPin, disabled: true },
   { name: "Branches", href: "/admin/branches", icon: Building2, disabled: true },
 ]
