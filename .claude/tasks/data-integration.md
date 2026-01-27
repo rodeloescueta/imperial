@@ -69,24 +69,7 @@ Integrate real customer data and accurate plan information into the Imperial Int
 
 ---
 
-## Current Website State (Incorrect)
-
-The website currently displays placeholder plans that don't match the real offerings:
-
-| Website (Wrong) | Price | Speed |
-|-----------------|-------|-------|
-| Essential 50 | ₱1,299 | 50 Mbps |
-| Essential 100 | ₱1,799 | 100 Mbps |
-| Essential 200 | ₱2,499 | 200 Mbps |
-
-**Files affected:**
-- `components/sections/ResidentialPlans.tsx` - Plan definitions
-- `components/sections/Stats.tsx` - Customer count stats
-- `data/coverage.json` - Coverage areas (may need updating)
-
----
-
-## Potential Use Cases for Data
+## Implementation Progress
 
 ### Phase 1: Website Content Updates ✅ COMPLETED
 - [x] Update residential plans to match actual offerings (7 plans)
@@ -94,6 +77,12 @@ The website currently displays placeholder plans that don't match the real offer
 - [x] Update Hero section with correct speed (up to 500Mbps)
 - [ ] Update coverage areas based on customer distribution
 - [ ] Determine which plans to feature (top 3? all 7?)
+
+**Files Modified:**
+- `data/plans.ts` - Centralized plan data
+- `components/sections/ResidentialPlans.tsx` - Uses real plan data
+- `components/sections/Stats.tsx` - Shows 9,700+ customers
+- `components/sections/Hero.tsx` - Updated speed to 500Mbps
 
 ### Phase 2: Coverage Map Enhancement
 - [ ] Use GPS coordinates (8,752 customers) to show coverage heat map
@@ -107,6 +96,84 @@ The website currently displays placeholder plans that don't match the real offer
 - [x] Admin Clients CRUD pages (/admin/clients)
 - [x] Client filters (search, status, city, plan)
 - [x] Sidebar navigation updated
+- [x] Fixed Decimal serialization for Next.js client components
+
+---
+
+## Technical Implementation Details
+
+### Database Schema
+Added to `prisma/schema.prisma`:
+- `ClientStatus` enum: ACTIVE, INACTIVE, LEAD, ARCHIVED
+- `SubscriptionStatus` enum: ACTIVE, SUSPENDED, CANCELLED, EXPIRED
+- `Plan` model: id, name, tier, speed, price, type, features, isActive
+- `Client` model: personal info, contact, address, GPS, balance, PPPoE
+- `Subscription` model: links clients to plans with dates and status
+
+### Files Created
+
+**Server Actions:**
+- `lib/actions/plans.ts` - getPlans, getPlan, getActivePlans, createPlan, updatePlan, deletePlan
+- `lib/actions/clients.ts` - getClients, getClient, createClient, updateClient, archiveClient, deleteClient, createSubscription, getClientCities
+
+**Validation Schemas:**
+- `lib/validations/plan.ts` - Zod schemas for plan create/update
+- `lib/validations/client.ts` - Zod schemas for client and subscription
+
+**Admin Pages:**
+- `app/admin/(dashboard)/plans/page.tsx` - List with pagination
+- `app/admin/(dashboard)/plans/new/page.tsx` - Create form
+- `app/admin/(dashboard)/plans/[id]/page.tsx` - View details
+- `app/admin/(dashboard)/plans/[id]/edit/page.tsx` - Edit form
+- `app/admin/(dashboard)/clients/page.tsx` - List with filters
+- `app/admin/(dashboard)/clients/new/page.tsx` - Create with plan selector
+- `app/admin/(dashboard)/clients/[id]/page.tsx` - View with subscription history
+- `app/admin/(dashboard)/clients/[id]/edit/page.tsx` - Edit form
+
+**Components:**
+- `components/admin/plan-table.tsx` - Plan data table with actions
+- `components/admin/plan-form.tsx` - Plan create/edit form
+- `components/admin/client-table.tsx` - Client data table with actions
+- `components/admin/client-form.tsx` - Client create/edit form
+- `components/admin/client-filters.tsx` - Search, status, city, plan filters
+- `components/ui/checkbox.tsx` - shadcn checkbox component
+
+**Database Scripts:**
+- `prisma/seed.ts` - Seeds 15 plans from data/plans.ts
+- `prisma/seed-clients.ts` - Imports CSV data (9,782 clients, 9,745 subscriptions)
+- `prisma/migrations/20260127034728_add_clients_plans/` - Migration
+
+### CSV Import Strategy
+The CSV has alternating rows (client row, then service row). The import script:
+1. Detects client rows by presence of `Id` field
+2. Looks ahead for service data in next row
+3. Normalizes plan names: "02.  BRONZE 799" → "BRONZE"
+4. Creates client with subscription if plan found
+
+### Bug Fixes Applied
+1. **Prisma client undefined**: Required `npx prisma generate` after schema changes
+2. **Decimal serialization**: Added `serialize()` helper to convert Prisma Decimal to numbers for Next.js client components
+
+---
+
+## Import Results
+
+Successfully imported:
+- **15 plans** (7 residential + 8 legacy/SME/corporate)
+- **9,782 clients**
+- **9,745 subscriptions**
+
+### Plan Subscriber Counts (from admin):
+| Plan | Subscribers |
+|------|-------------|
+| Silver | 2,580 |
+| Bronze | 2,420 |
+| Solo | 1,621 |
+| Gold | 1,292 |
+| Platinum | 793 |
+| Diamond | 672 |
+| Old 800 | 176 |
+| Ruby | 148 |
 
 ---
 
@@ -134,15 +201,12 @@ The website currently displays placeholder plans that don't match the real offer
 
 ## Status
 
-**Status**: Phase 1 & 3 Complete
+**Status**: Phase 1 & 3 Complete ✅
 
-**Completed (2026-01-27)**:
-- Website updated with real plan data (7 residential plans)
-- Stats section updated (9,700+ customers)
-- Database schema added (Plan, Client, Subscription)
-- CSV import script created and data imported (9,782 clients, 9,745 subscriptions)
-- Admin Plans pages (list, view, create, edit)
-- Admin Clients pages (list, view, create, edit) with filters
+**Commits:**
+1. `434b78d` - Update hero and other sections with real data
+2. `0fc9f71` - Update residential plans with real pricing data
+3. `98239dc` - Add admin clients and plans management with CSV import
 
 **Next Steps**:
 1. Client to provide SME/Business plans information (for /prime page)
