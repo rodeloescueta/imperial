@@ -315,7 +315,7 @@ export function MarketReveal({ className }: MarketRevealProps) {
           style={{ opacity: label1Opacity }}
         >
           <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-sky-100">
-            <span className="text-sm font-semibold text-sky-600">500+ Happy Customers</span>
+            <span className="text-sm font-semibold text-sky-600">9,700+ Happy Customers</span>
           </div>
         </motion.div>
 
@@ -345,7 +345,7 @@ export function MarketReveal({ className }: MarketRevealProps) {
       >
         <div className="flex flex-wrap gap-2 justify-center">
           <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-sky-100">
-            <span className="text-xs font-semibold text-sky-600">500+ Customers</span>
+            <span className="text-xs font-semibold text-sky-600">9,700+ Customers</span>
           </div>
           <div className="bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-sky-100">
             <span className="text-xs font-semibold text-sky-600">Growing Daily</span>
@@ -408,7 +408,7 @@ function StaticMarketView() {
       {/* Static labels */}
       <div className="absolute bottom-24 left-[15%] hidden md:block">
         <div className="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md border border-sky-100">
-          <span className="text-sm font-semibold text-sky-600">500+ Happy Customers</span>
+          <span className="text-sm font-semibold text-sky-600">9,700+ Happy Customers</span>
         </div>
       </div>
       <div className="absolute bottom-12 right-[20%] hidden md:block">

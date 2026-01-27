@@ -12,7 +12,7 @@ const benefits = [
   },
   {
     icon: Users,
-    title: "500+ Happy Customers",
+    title: "9,700+ Happy Customers",
     description: "And growing every single day",
   },
   {

@@ -8,7 +8,7 @@ const features = [
     icon: Zap,
     title: "Blazing Fast",
     description:
-      "Experience fiber-optic speeds up to 200 Mbps. Stream, game, and work without buffering.",
+      "Experience fiber-optic speeds up to 500 Mbps. Stream, game, and work without buffering.",
     color: "text-yellow-500",
     bgColor: "bg-yellow-50",
     hoverBg: "group-hover:bg-yellow-100",

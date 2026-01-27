@@ -72,8 +72,8 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="text-subtitle mb-8 max-w-lg"
             >
-              Experience blazing-fast fiber internet with speeds up to 200 Mbps.
-              Trusted by hundreds of homes in Cavite with 24/7 local support.
+              Experience blazing-fast fiber internet with speeds up to 500 Mbps.
+              Trusted by thousands of homes in Cavite with 24/7 local support.
             </motion.p>
 
             <motion.div
@@ -177,7 +177,7 @@ export function Hero() {
                     <span className="text-primary text-lg">⚡</span>
                   </motion.div>
                   <div>
-                    <p className="text-2xl font-bold text-foreground">200</p>
+                    <p className="text-2xl font-bold text-foreground">500</p>
                     <p className="text-xs text-muted-foreground">Mbps Speed</p>
                   </div>
                 </div>
@@ -203,7 +203,7 @@ export function Hero() {
                     ))}
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    <span className="font-semibold text-foreground">500+</span>{" "}
+                    <span className="font-semibold text-foreground">9,700+</span>{" "}
                     happy customers
                   </p>
                 </div>

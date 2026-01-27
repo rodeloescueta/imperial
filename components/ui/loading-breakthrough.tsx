@@ -383,7 +383,7 @@ export function LoadingBreakthrough({ className }: LoadingBreakthroughProps) {
               fontSize="13"
               fill="#6b7280"
             >
-              200 Mbps • 12ms ping
+              500 Mbps • 12ms ping
             </text>
 
             {/* Progress bar complete */}
@@ -495,7 +495,7 @@ function StaticLoadingView() {
           Connected!
         </text>
         <text x="200" y="255" textAnchor="middle" fontSize="13" fill="#6b7280">
-          200 Mbps • 12ms ping
+          500 Mbps • 12ms ping
         </text>
 
         {/* Progress bar complete */}
